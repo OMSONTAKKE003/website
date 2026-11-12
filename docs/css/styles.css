@@ -40,6 +40,7 @@
   --accent-ink: #05201d;
   --attn-rgb: 94, 234, 212;
   --attn2-rgb: 245, 184, 106;
+  --ink-rgb: 233, 238, 242;
   --shadow: 0 24px 60px rgba(0, 0, 0, 0.42);
   --grid-opacity: 0.22;
 
@@ -64,6 +65,7 @@ html[data-theme="light"] {
   --accent-ink: #fffbf3;
   --attn-rgb: 15, 118, 110;
   --attn2-rgb: 154, 91, 18;
+  --ink-rgb: 25, 28, 26;
   --shadow: 0 24px 60px rgba(82, 62, 30, 0.13);
   --grid-opacity: 0.18;
   color-scheme: light;
@@ -543,13 +545,13 @@ html[data-theme="light"] .icon-sun {
   display: inline-block;
   padding: 0 0.04em;
   border-radius: 0.08em;
-  background: rgba(var(--attn-rgb), calc(var(--heat) * 0.16));
-  box-shadow: 0 0 calc(34px * var(--heat) * var(--temp)) rgba(var(--attn-rgb), calc(var(--heat) * 0.45));
+  background: rgba(var(--ink-rgb), calc(var(--heat) * 0.1));
+  box-shadow: 0 0 calc(30px * var(--heat) * var(--temp)) rgba(var(--ink-rgb), calc(var(--heat) * 0.22));
   transition: color 0.2s, background 0.3s, box-shadow 0.3s;
 }
 
 .token.is-peak {
-  color: var(--accent);
+  color: var(--text);
 }
 
 .hero-role {
