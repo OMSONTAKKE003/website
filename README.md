@@ -1,13 +1,14 @@
-# [YOUR NAME] — portfolio
+# Om Sontakke — portfolio
 
 A static, zero-build personal portfolio: HTML, CSS, and vanilla JavaScript,
 deployed straight from `docs/` on GitHub Pages. No frameworks, no bundler,
 no trackers.
 
-The page uses a warm editorial layout on a grid-paper background image. The
-top navigation has three tabs: **about**, **projects**, and **writing**.
-Clicking a project title opens a side drawer with the long description, media,
-tags, and links.
+The site is split into three pages with a warm editorial layout on a
+grid-paper background image. The top-right navigation has three tabs:
+**about**, **projects**, and **writing**. Landing text lives on the About
+page, while projects (with optional images and videos on the right) and
+writing each have their own page.
 
 ---
 
@@ -40,15 +41,10 @@ with comments explaining each field. Replace the `[SQUARE BRACKET]` placeholders
 | Field | Used on the page |
 | --- | --- |
 | `meta` | Browser tab, description, name, role, location, optional avatar |
-| `hero` | Headline, typed line, summary |
-| `about` | Paragraphs, fact list, and optional portrait photo |
-| `projects` | Project list and the side drawer |
-| `writing` | Writing list |
-| `footer` | Small footer line |
-
-`skills`, `experience`, `education`, and `contact` are still in `content.js`
-but are not rendered while the navigation is limited to about / projects /
-writing. Set `writing.items: []` to hide the writing section and its tab.
+| `hero` | Headline, typed line, summary (About page) |
+| `about` | Paragraphs, fact list, and optional portrait photo (About page) |
+| `projects` | Project list on `projects.html` |
+| `writing` | Writing list on `writing.html` |
 
 ### Add your photo
 
@@ -61,30 +57,52 @@ photoAlt: "Portrait of Your Name",
 photoCaption: "", // optional line under the photo
 ```
 
-The photo appears below the About text and above Projects. It is capped at
-340px wide, keeps its aspect ratio, and scales down on mobile. Leave `photo`
-empty to hide it.
+The photo appears below the About text. It is capped at 340px wide, keeps its
+aspect ratio, and scales down on mobile. Leave `photo` empty to hide it.
 
-### Project drawer fields
+### Projects and media
 
-Each project can include:
+Each project on `projects.html` can include text on the left and media on the
+right. Set `media` to an array of files placed in `docs/assets/`. Images are
+displayed as `<img>`; `.mp4`, `.webm`, and `.ogg` files render as muted,
+looping `<video>` players.
 
 ```js
 {
   title: "Project name",
   year: "2026",
   description: "Short line shown in the list.",
-  longDescription: "Longer text shown inside the drawer.",
-  skills: ["Skill A", "Skill B"],      // shown as tags
-  media: "assets/project.jpg",          // optional image, or .mp4/.webm/.ogg
-  href: "https://example.com",          // live demo
-  repo: "https://github.com/...",       // source
+  longDescription: "Longer text shown on the project page.",
+  skills: ["Skill A", "Skill B"],                 // shown as tags
+  media: ["assets/project-01.jpg", "assets/demo.mp4"],
+  mediaAlt: "Screenshot of Project name",         // alt text for images
+  mediaCaption: "",                               // optional line under media
+  href: "https://example.com",                    // live demo
+  repo: "https://github.com/...",                 // source
   linkLabel: "visit site"
 }
 ```
 
+On desktop the copy sits left of the media; under 900px the media stacks below
+the text. Leave `media: []` to show text only.
+
 Links containing `[ ]` or `< >` are rendered as plain text marked “pending”
 instead of dead links. External links open in a new tab.
+
+### Writing
+
+Add posts to `writing.items`:
+
+```js
+{
+  date: "Month Year",
+  title: "Post title",
+  summary: "One sentence about the post.",
+  href: "https://example.com/post"
+}
+```
+
+Set `writing.items: []` to render an empty-state message instead.
 
 ### Background image
 
@@ -103,7 +121,8 @@ visible while preserving text contrast. Adjust it at the top of
 ### Other things to change
 
 - **Colours and type:** design tokens at the top of `docs/styles.css` (`:root`).
-- **Fonts:** IBM Plex Mono is loaded from Google Fonts in `docs/index.html`.
+- **About typography:** `body[data-page="about"]` rules in `docs/styles.css`.
+- **Fonts:** IBM Plex Mono is loaded from Google Fonts in each HTML page.
   Remove those three `<link>` tags to fall back to the system mono stack.
 - **Favicon:** `docs/assets/favicon.svg`.
 - **Page title and description:** also set from `content.js` at load time.
@@ -159,9 +178,11 @@ website/
 ├── README.md
 ├── .gitignore
 └── docs/                  ← published by GitHub Pages
-    ├── index.html         page shell and drawer markup
+    ├── index.html         About page (hero + about)
+    ├── projects.html      Projects page
+    ├── writing.html       Writing page
     ├── content.js         ← EDIT THIS FILE
-    ├── main.js            renders sections, nav, and project drawer
+    ├── main.js            renders nav and page sections
     ├── styles.css         theme, grid-paper background, responsive rules
     ├── .nojekyll          serve files as-is
     └── assets/
@@ -175,16 +196,11 @@ There is no build step and no `node_modules`.
 
 ## 4. Accessibility notes
 
-- Semantic `header` / `main` / `footer`, one `h1`, labelled nav, skip link.
-- Project titles are real buttons; the drawer traps nothing but closes with
-  Escape and returns focus to the project title.
-- The closed drawer uses `aria-hidden` plus `inert`, so its controls are not
-  focusable until opened.
+- Semantic `header` / `main`, one `h1` per page, labelled nav, skip link.
+- The current page is marked with `aria-current="page"` in the nav.
 - Colour tokens target WCAG AA contrast over the veiled background.
 - Content is rendered with JavaScript; a `<noscript>` note explains this.
-- The page respects `prefers-reduced-motion` for the smooth scrolling.
-
-A Chrome + axe-core check of the current build reports **0 violations**.
+- The site respects `prefers-reduced-motion` for smooth scrolling.
 
 ---
 
@@ -197,7 +213,6 @@ Search `docs/content.js` for `[` and replace:
 - [ ] About paragraphs and facts
 - [ ] Project titles, descriptions, years, tags, links and media
 - [ ] Writing posts (or set `items: []`)
-- [ ] Footer line
 
 ---
 

@@ -1,4 +1,4 @@
-/* main.js: renders the unboxed two-column editorial portfolio, writing index, and project side drawer. */
+/* main.js: renders the about, projects, and writing pages from content.js. */
 (function () {
   'use strict';
 
@@ -26,7 +26,7 @@
 
   function real(href) {
     return typeof href === 'string' && !/[\[\]<>]/.test(href) &&
-      /^(https?:\/\/|mailto:|tel:|#|\/|\.{1,2}\/)/i.test(href.trim());
+      /^(https?:\/\/|mailto:|tel:|#|\/|\.{1,2}\/|[a-z0-9_-]+\/)/i.test(href.trim());
   }
 
   function link(href, label, cls) {
@@ -45,244 +45,207 @@
     return n;
   }
 
-  var sectionsRoot = $('sections');
-  if (!sectionsRoot) return;
-  sectionsRoot.innerHTML = '';
-
-  /* --- Project Side Drawer --- */
-  var drawer = $('project-drawer');
-  var backdrop = $('drawer-backdrop');
-  var closeBtn = $('drawer-close');
-  var lastFocus = null;
-
-  function openDrawer(p) {
-    lastFocus = document.activeElement;
-    setText('drawer-year', p.year || 'project');
-    setText('drawer-title', p.title || '');
-    setText('drawer-desc', p.longDescription || p.description || '');
-
-    var mediaBox = $('drawer-media');
-    if (mediaBox) {
-      mediaBox.innerHTML = '';
-      var src = p.media || p.image || p.img;
-      if (src) {
-        if (/\.(mp4|webm|ogg)(\?.*)?$/i.test(src)) {
-          var vid = document.createElement('video');
-          vid.src = src;
-          vid.autoplay = true;
-          vid.loop = true;
-          vid.muted = true;
-          vid.playsInline = true;
-          vid.controls = true;
-          mediaBox.appendChild(vid);
-        } else {
-          var img = document.createElement('img');
-          img.src = src;
-          img.alt = p.title || 'Project media';
-          mediaBox.appendChild(img);
-        }
-        mediaBox.hidden = false;
-      } else {
-        mediaBox.hidden = true;
-      }
-    }
-
-    var tagsBox = $('drawer-tags');
-    if (tagsBox) {
-      var list = p.skills || p.stack || [];
-      tagsBox.textContent = list.length ? list.join(' · ') : '';
-    }
-
-    var linksBox = $('drawer-links');
-    if (linksBox) {
-      linksBox.innerHTML = '';
-      if (p.repo) {
-        linksBox.appendChild(link(p.repo, 'github ↗'));
-      }
-      if (p.href) {
-        linksBox.appendChild(link(p.href, (p.linkLabel || 'live demo').toLowerCase() + ' ↗'));
-      }
-    }
-
-    if (backdrop && drawer) {
-      backdrop.hidden = false;
-      drawer.removeAttribute('inert');
-      drawer.setAttribute('aria-hidden', 'false');
-      document.body.classList.add('drawer-open');
-      requestAnimationFrame(function () {
-        backdrop.classList.add('open');
-        drawer.classList.add('open');
-      });
-      if (closeBtn) closeBtn.focus();
-    }
+  function isPlaceholder(src) {
+    return typeof src !== 'string' || !src.trim() || /[\[\]<>]/.test(src);
   }
 
-  function closeDrawer() {
-    if (!backdrop || !drawer) return;
-    backdrop.classList.remove('open');
-    drawer.classList.remove('open');
-    drawer.setAttribute('inert', '');
-    drawer.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('drawer-open');
-    setTimeout(function () {
-      backdrop.hidden = true;
-    }, 220);
-    if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
-  }
-
-  if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
-  if (backdrop) backdrop.addEventListener('click', closeDrawer);
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && drawer && drawer.classList.contains('open')) {
-      closeDrawer();
-    }
-  });
-
-  /* Helper to create each section with a horizontal label and full-width content */
-  function makeRow(id, label) {
-    var sec = h('section', 'row');
-    sec.id = id;
-    var heading = h('h2', 'section-label', label);
-    var right = h('div', 'col-right');
-    sec.appendChild(heading);
-    sec.appendChild(right);
-    sectionsRoot.appendChild(sec);
-    return right;
-  }
-
-  /* Meta & Hero */
   var M = C.meta || {};
   var H = C.hero || {};
-  var nav = [];
+  var page = document.body.dataset.page || 'about';
+  var navItems = [
+    ['about', 'about', 'index.html#about'],
+    ['projects', 'projects', 'projects.html'],
+    ['writing', 'writing', 'writing.html'],
+  ];
 
-  if (M.siteTitle) document.title = M.siteTitle;
+  /* ------------------------------------------------------------------------
+     Metadata
+     ------------------------------------------------------------------------ */
+  var pageTitles = { projects: 'Projects', writing: 'Writing' };
+  if (pageTitles[page]) {
+    document.title = pageTitles[page] + (M.name ? ' — ' + M.name : '');
+  } else if (M.siteTitle) {
+    document.title = M.siteTitle;
+  }
+
   var md = document.querySelector('meta[name="description"]');
   if (md && M.description) md.setAttribute('content', M.description);
 
-  var avatarSrc = M.avatar || M.profileImage || H.avatar;
-  var av = $('hero-avatar');
-  if (av && avatarSrc) {
-    av.src = avatarSrc;
-    av.alt = M.name || 'Portrait';
-    av.hidden = false;
-  }
-
-  setText('hero-title', H.headline || H.typedLine || M.name || '');
-  setText('hero-lede', H.headline && H.typedLine ? H.typedLine : '');
-  setText('hero-summary', H.summary || '');
-
-  /* About */
-  if (C.about) {
-    var A = C.about;
-    var abRight = makeRow('about', 'About');
-    var prose = h('div', 'prose');
-    (A.paragraphs || []).forEach(function (p) {
-      prose.appendChild(h('p', '', p));
-    });
-    abRight.appendChild(prose);
-
-    if (A.facts && A.facts.length) {
-      var ul = h('ul', 'facts');
-      A.facts.forEach(function (f) {
-        var li = h('li');
-        var b = h('strong', '', f.label + '. ');
-        li.appendChild(b);
-        li.appendChild(document.createTextNode(f.value));
-        ul.appendChild(li);
-      });
-      abRight.appendChild(ul);
-    }
-
-    if (A.photo && !/[\[\]<>]/.test(A.photo)) {
-      var figure = h('figure', 'about-photo');
-      var photo = document.createElement('img');
-      photo.src = A.photo.trim();
-      photo.alt = A.photoAlt || (M.name ? 'Portrait of ' + M.name : 'Portrait');
-      photo.loading = 'lazy';
-      photo.decoding = 'async';
-      figure.appendChild(photo);
-      if (A.photoCaption) {
-        figure.appendChild(h('figcaption', '', A.photoCaption));
-      }
-      abRight.appendChild(figure);
-    }
-
-    nav.push(['about', 'about']);
-  }
-
-  /* Projects (Clicking title opens side drawer with media + GitHub link) */
-  var P = C.projects;
-  if (P && P.items && P.items.length) {
-    var pRight = makeRow('projects', 'Projects');
-    var pList = h('div', 'entry-list');
-
-    P.items.forEach(function (p) {
-      var item = h('article', 'entry');
-      var btn = h('button', 'entry-title', p.title);
-      btn.type = 'button';
-      btn.addEventListener('click', function () {
-        openDrawer(p);
-      });
-      item.appendChild(btn);
-
-      if (p.description) {
-        item.appendChild(h('p', 'entry-desc', p.description));
-      }
-
-      var metaBits = [p.year].concat(p.skills || p.stack || []).filter(Boolean);
-      if (metaBits.length) {
-        item.appendChild(h('p', 'entry-meta', metaBits.join(' · ')));
-      }
-
-      pList.appendChild(item);
-    });
-
-    pRight.appendChild(pList);
-    nav.push(['projects', 'projects']);
-  }
-
-  /* Writing / Blogs */
-  var W = C.writing;
-  if (W && W.items && W.items.length) {
-    var wRight = makeRow('writing', 'Writing');
-    var wList = h('div', 'entry-list');
-
-    W.items.forEach(function (post) {
-      var item = h('article', 'entry');
-      var titleEl = link(post.href, post.title, 'entry-title');
-      item.appendChild(titleEl);
-
-      if (post.summary) {
-        item.appendChild(h('p', 'entry-desc', post.summary));
-      }
-      if (post.date) {
-        item.appendChild(h('p', 'entry-meta', post.date));
-      }
-
-      wList.appendChild(item);
-    });
-
-    wRight.appendChild(wList);
-    nav.push(['writing', 'writing']);
-  }
-
-  /* Top Navigation */
+  /* ------------------------------------------------------------------------
+     Navigation
+     ------------------------------------------------------------------------ */
   var navEl = $('nav');
   if (navEl) {
     navEl.innerHTML = '';
-    nav.forEach(function (n) {
-      var a = h('a', '', n[1]);
-      a.href = '#' + n[0];
+    navItems.forEach(function (item) {
+      var a = h('a', item[0] === page ? 'active' : '', item[1]);
+      a.href = item[2];
+      if (item[0] === page) a.setAttribute('aria-current', 'page');
       navEl.appendChild(a);
     });
   }
 
-  /* Minimal Footer */
-  var F = C.footer;
-  var ft = $('footer');
-  var ftRow = $('footer-row');
-  if (F && ft && ftRow && (F.builtWith || F.lastUpdated)) {
-    ftRow.hidden = false;
-    ft.textContent = [F.builtWith, F.lastUpdated ? 'updated ' + F.lastUpdated : ''].filter(Boolean).join(' · ');
+  /* ------------------------------------------------------------------------
+     Hero + About (landing page)
+     ------------------------------------------------------------------------ */
+  function renderHero() {
+    setText('hero-title', H.headline || M.name || '');
+    setText('hero-lede', H.typedLine || '');
+    setText('hero-summary', H.summary || '');
+
+    var avatar = $('hero-avatar');
+    var avatarSrc = M.avatar || M.profileImage || H.avatar;
+    if (avatar && !isPlaceholder(avatarSrc)) {
+      avatar.src = avatarSrc.trim();
+      avatar.alt = M.name ? 'Portrait of ' + M.name : 'Portrait';
+      avatar.hidden = false;
+    }
   }
+
+  function renderAbout() {
+    var A = C.about || {};
+    var body = $('about-body');
+    if (body) {
+      (A.paragraphs || []).forEach(function (text) {
+        body.appendChild(h('p', '', text));
+      });
+    }
+
+    var facts = $('about-facts');
+    if (facts && A.facts) {
+      A.facts.forEach(function (fact) {
+        var li = h('li');
+        li.appendChild(h('strong', '', fact.label + '. '));
+        li.appendChild(document.createTextNode(fact.value));
+        facts.appendChild(li);
+      });
+    }
+
+    var photoSlot = $('about-photo');
+    if (photoSlot && !isPlaceholder(A.photo)) {
+      var figure = h('figure', 'about-photo');
+      var img = document.createElement('img');
+      img.src = A.photo.trim();
+      img.alt = A.photoAlt || (M.name ? 'Portrait of ' + M.name : 'Portrait');
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      figure.appendChild(img);
+      if (A.photoCaption) figure.appendChild(h('figcaption', '', A.photoCaption));
+      photoSlot.appendChild(figure);
+    }
+  }
+
+  /* ------------------------------------------------------------------------
+     Projects page
+     ------------------------------------------------------------------------ */
+  function mediaSources(project) {
+    if (Array.isArray(project.media)) return project.media.filter(Boolean);
+    return project.media ? [project.media] : [];
+  }
+
+  function renderProjects() {
+    var root = $('projects-list');
+    if (!root) return;
+
+    var items = (C.projects && C.projects.items) || [];
+    if (!items.length) {
+      root.appendChild(h('p', 'empty', 'No projects yet. Add one in content.js.'));
+      return;
+    }
+
+    items.forEach(function (p, index) {
+      var article = h('article', 'project');
+
+      var top = h('div', 'project-top');
+      top.appendChild(h('span', 'project-index', 'P' + String(index + 1).padStart(2, '0')));
+      top.appendChild(h('span', '', p.year || ''));
+      article.appendChild(top);
+
+      article.appendChild(h('h2', 'project-title', p.title || '[PROJECT TITLE]'));
+
+      var body = h('div', 'project-body');
+      var copy = h('div', 'project-copy');
+
+      var description = p.longDescription || p.description;
+      if (description) {
+        copy.appendChild(h('p', 'project-desc', description));
+      }
+
+      var tags = p.skills || p.stack || [];
+      if (tags.length) {
+        copy.appendChild(h('p', 'project-tags', tags.join(' · ')));
+      }
+
+      var links = h('div', 'project-links');
+      if (p.href) links.appendChild(link(p.href, (p.linkLabel || 'visit project') + ' ↗'));
+      if (p.repo) links.appendChild(link(p.repo, 'github ↗'));
+      if (links.children.length) copy.appendChild(links);
+
+      body.appendChild(copy);
+
+      var sources = mediaSources(p);
+      if (sources.length) {
+        article.classList.add('has-media');
+        var mediaWrap = h('div', 'project-media-wrap');
+        var gallery = h('div', 'project-media');
+        sources.forEach(function (src) {
+          if (/\.(mp4|webm|ogg)(\?.*)?$/i.test(src)) {
+            var video = document.createElement('video');
+            video.src = src.trim();
+            video.controls = true;
+            video.muted = true;
+            video.loop = true;
+            video.playsInline = true;
+            video.preload = 'metadata';
+            gallery.appendChild(video);
+          } else {
+            var img = document.createElement('img');
+            img.src = src.trim();
+            img.alt = p.mediaAlt || p.title || 'Project media';
+            img.loading = 'lazy';
+            img.decoding = 'async';
+            gallery.appendChild(img);
+          }
+        });
+        mediaWrap.appendChild(gallery);
+        if (p.mediaCaption) {
+          mediaWrap.appendChild(h('p', 'project-caption', p.mediaCaption));
+        }
+        body.appendChild(mediaWrap);
+      }
+
+      article.appendChild(body);
+      root.appendChild(article);
+    });
+  }
+
+  /* ------------------------------------------------------------------------
+     Writing page
+     ------------------------------------------------------------------------ */
+  function renderWriting() {
+    var root = $('writing-list');
+    if (!root) return;
+
+    var items = (C.writing && C.writing.items) || [];
+    if (!items.length) {
+      root.appendChild(h('p', 'empty', 'No writing yet. Add a post in content.js.'));
+      return;
+    }
+
+    items.forEach(function (post) {
+      var entry = h('article', 'entry');
+      entry.appendChild(link(post.href, post.title || '[POST TITLE]', 'entry-title'));
+      if (post.summary) entry.appendChild(h('p', 'entry-desc', post.summary));
+      if (post.date) entry.appendChild(h('p', 'entry-meta', post.date));
+      root.appendChild(entry);
+    });
+  }
+
+  /* ------------------------------------------------------------------------
+     Boot
+     ------------------------------------------------------------------------ */
+  renderHero();
+  renderAbout();
+  renderProjects();
+  renderWriting();
 })();

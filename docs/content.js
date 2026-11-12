@@ -8,9 +8,8 @@
    The site shows:
    • a hero at the top
    • about
-   • projects (each title opens a side drawer)
+   • projects (with optional images/videos)
    • writing
-   • a small footer line
 
    Rules of thumb:
    • Plain text only inside quotes.
@@ -30,7 +29,7 @@ window.SITE_CONTENT = {
     name: "Om Sontakke",
     role: "SY Extc",
     siteTitle: "Om Sontakke — SY Extc",
-    description: "I am a 19 year old engineering student just building what i like :)",
+    description: "A Fellow :)",
     location: "Mumbai, India",
 
     // Optional small portrait beside the hero. Leave empty to hide it.
@@ -82,8 +81,8 @@ window.SITE_CONTENT = {
 
   /* -----------------------------------------------------------------------
      PROJECTS
-     The description is shown in the list. The longDescription, media, tags,
-     and links are shown when the title opens the side drawer.
+     Each item appears on projects.html. Add one or more images/videos to
+     `media` and they are shown under the project title.
      ----------------------------------------------------------------------- */
   projects: {
     items: [
@@ -91,14 +90,17 @@ window.SITE_CONTENT = {
         title: "[PROJECT TITLE 01]",
         year: "[YEAR]",
         description: "[SHORT DESCRIPTION FOR THE PROJECT LIST.]",
-        longDescription: "[LONGER DESCRIPTION SHOWN INSIDE THE DRAWER — THE PROBLEM, YOUR APPROACH, AND THE RESULT.]",
+        longDescription: "[LONGER DESCRIPTION — THE PROBLEM, YOUR APPROACH, AND THE RESULT.]",
 
-        // Tags shown in the list and the drawer.
+        // Tags shown under the description.
         skills: ["[TAG 01]", "[TAG 02]", "[TAG 03]"],
 
-        // Optional image or video. Put files in docs/assets/.
-        // Example: media: "assets/project-01.jpg"
-        media: "",
+        // Put files in docs/assets/ and list them here. Images and
+        // .mp4 / .webm / .ogg videos are supported.
+        // Example: media: ["assets/project-01.jpg", "assets/demo.mp4"]
+        media: [],
+        mediaAlt: "Screenshot of [PROJECT TITLE 01]",
+        mediaCaption: "", // optional line under the media
 
         href: "[PROJECT LINK]",
         repo: "[REPOSITORY LINK]",
@@ -108,9 +110,11 @@ window.SITE_CONTENT = {
         title: "[PROJECT TITLE 02]",
         year: "[YEAR]",
         description: "[SHORT DESCRIPTION FOR THE PROJECT LIST.]",
-        longDescription: "[LONGER DESCRIPTION SHOWN INSIDE THE DRAWER.]",
+        longDescription: "[LONGER DESCRIPTION.]",
         skills: ["[TAG 01]", "[TAG 02]"],
-        media: "",
+        media: [],
+        mediaAlt: "Screenshot of [PROJECT TITLE 02]",
+        mediaCaption: "",
         href: "[PROJECT LINK]",
         repo: "[REPOSITORY LINK]",
         linkLabel: "visit project",
@@ -119,9 +123,11 @@ window.SITE_CONTENT = {
         title: "[PROJECT TITLE 03]",
         year: "[YEAR]",
         description: "[SHORT DESCRIPTION FOR THE PROJECT LIST.]",
-        longDescription: "[LONGER DESCRIPTION SHOWN INSIDE THE DRAWER.]",
+        longDescription: "[LONGER DESCRIPTION.]",
         skills: ["[TAG 01]", "[TAG 02]"],
-        media: "",
+        media: [],
+        mediaAlt: "Screenshot of [PROJECT TITLE 03]",
+        mediaCaption: "",
         href: "[PROJECT LINK]",
         repo: "[REPOSITORY LINK]",
         linkLabel: "visit project",
@@ -148,13 +154,5 @@ window.SITE_CONTENT = {
         href: "[POST LINK]",
       },
     ],
-  },
-
-  /* -----------------------------------------------------------------------
-     FOOTER
-     ----------------------------------------------------------------------- */
-  footer: {
-    builtWith: "HTML · CSS · vanilla JS · no trackers",
-    lastUpdated: "[MONTH YEAR]",
   },
 };
