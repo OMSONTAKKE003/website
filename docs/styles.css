@@ -39,8 +39,15 @@ body.drawer-open {
 }
 
 .page {
-  max-width: 780px;
+  width: 100%;
+  max-width: 1180px;
   margin: 0 auto;
+}
+
+@media (min-width: 900px) {
+  .page {
+    width: 72vw;
+  }
 }
 
 a {
@@ -85,6 +92,7 @@ ul { list-style: none; }
 #nav {
   display: flex;
   flex-wrap: wrap;
+  justify-content: flex-end;
   gap: 8px 22px;
 }
 
@@ -106,17 +114,32 @@ ul { list-style: none; }
   text-decoration: none;
 }
 
-/* Two-Column Editorial Grid */
+/* Single-column editorial flow */
 .row {
-  display: grid;
-  grid-template-columns: 150px minmax(0, 1fr);
-  gap: 44px;
-  align-items: start;
+  display: block;
 }
 
 .row + .row,
 section.row {
   margin-top: 44px;
+}
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.section-label::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--rule);
 }
 
 .col-left {
@@ -374,7 +397,6 @@ a.entry-title:hover {
 @media (max-width: 680px) {
   body { padding: 28px 18px 64px; }
   .row {
-    grid-template-columns: 1fr;
     gap: 10px;
   }
   .row + .row,

@@ -138,13 +138,13 @@
     }
   });
 
-  /* Helper to create each 2-column row: [italic label] | [content] */
+  /* Helper to create each section with a horizontal label and full-width content */
   function makeRow(id, label) {
     var sec = h('section', 'row');
     sec.id = id;
-    var left = h('div', 'col-left', label);
+    var heading = h('h2', 'section-label', label);
     var right = h('div', 'col-right');
-    sec.appendChild(left);
+    sec.appendChild(heading);
     sec.appendChild(right);
     sectionsRoot.appendChild(sec);
     return right;
