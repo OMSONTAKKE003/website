@@ -237,7 +237,7 @@
 
     var items = (C.writing && C.writing.items) || [];
     if (!items.length) {
-      root.appendChild(h('p', 'empty', 'No writing yet. Add a post in content.js.'));
+      root.appendChild(h('p', 'empty', (C.writing && C.writing.empty) || 'stay tuned :)'));
       return;
     }
 

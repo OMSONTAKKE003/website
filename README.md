@@ -118,7 +118,8 @@ Add posts to `writing.items`:
 }
 ```
 
-Set `writing.items: []` to render an empty-state message instead.
+Set `writing.items: []` and the page shows `writing.empty`, which defaults to
+`"stay tuned :)"`.
 
 ### Background image
 

@@ -72,10 +72,10 @@ window.SITE_CONTENT = {
     // Links shown under a horizontal line at the end of About.
     // Replace the placeholder URLs with your real profiles.
     connect: [
-      { label: "email", href: "mailto:[EMAIL ADDRESS]" },
+      { label: "email", href: "mailto:sontakkeom80@gmail.com" },
       { label: "github", href: "https://github.com/OMSONTAKKE003" },
       { label: "linkedin", href: "[LINKEDIN URL]" },
-      { label: "x", href: "[X URL]" },
+      { label: "x/twitter", href: "https://x.com/0mSontakke" },
     ],
 
     // Your photo. Put the image in docs/assets/ and use a path like
@@ -120,19 +120,9 @@ window.SITE_CONTENT = {
      Set items: [] to hide this section and its tab.
      ----------------------------------------------------------------------- */
   writing: {
-    items: [
-      {
-        date: "[MONTH YEAR]",
-        title: "[POST TITLE 01]",
-        summary: "[ONE SENTENCE ABOUT THE POST.]",
-        href: "[POST LINK]",
-      },
-      {
-        date: "[MONTH YEAR]",
-        title: "[POST TITLE 02]",
-        summary: "[ONE SENTENCE ABOUT THE POST.]",
-        href: "[POST LINK]",
-      },
-    ],
+    // Shown on writing.html while there are no posts.
+    empty: "stay tuned :)",
+
+    items: [],
   },
 };
