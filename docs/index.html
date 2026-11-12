@@ -1,329 +1,64 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>[YOUR NAME] — [YOUR ROLE]</title>
-  <meta name="description" content="[ONE SENTENCE ABOUT WHAT YOU DO AND WHO YOU HELP.]">
-  <meta name="color-scheme" content="dark light">
-  <meta name="theme-color" content="#070A0F" id="theme-color-meta">
-
-  <!-- Social preview. main.js fills these from content.js where possible. -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="[YOUR NAME] — [YOUR ROLE]">
-  <meta property="og:description" content="[ONE SENTENCE ABOUT WHAT YOU DO AND WHO YOU HELP.]">
-  <meta property="og:url" content="https://<username>.github.io/<repo>/">
-  <meta name="twitter:card" content="summary">
-
+  <title>Portfolio</title>
+  <meta name="description" content="">
+  <meta name="theme-color" content="#222723">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/styles.css">
-
-  <!-- Apply a saved theme before first paint to avoid a flash. -->
-  <script>
-    (function () {
-      document.documentElement.classList.add('js');
-      try {
-        if (localStorage.getItem('theme') === 'light') {
-          document.documentElement.dataset.theme = 'light';
-        }
-      } catch (e) { /* storage can be blocked; dark is the default */ }
-    })();
-  </script>
 </head>
-
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
-  <div class="scroll-progress" aria-hidden="true"></div>
+  <a class="skip" href="#main">Skip to content</a>
 
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="#hero" aria-label="Back to top">
-        <span class="brand-mark" aria-hidden="true">⟨/⟩</span>
-        <span id="brand-name">[YOUR NAME]</span>
-      </a>
+  <div class="page">
+    <header class="topbar">
+      <nav id="nav" aria-label="Sections"></nav>
+    </header>
 
-      <button class="nav-toggle" id="nav-toggle" type="button"
-              aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
-        <span class="nav-toggle-bars" aria-hidden="true"><i></i><i></i><i></i></span>
-      </button>
+    <main id="main">
+      <section class="row hero" id="top">
+        <div class="col-left" id="hero-left">
+          <img id="hero-avatar" class="portrait" alt="" hidden>
+        </div>
+        <div class="col-right">
+          <h1 class="hero-lead" id="hero-title"></h1>
+          <p class="hero-sub" id="hero-lede"></p>
+          <p class="hero-sub" id="hero-summary"></p>
+        </div>
+      </section>
 
-      <nav class="site-nav" id="site-nav" aria-label="Primary">
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#skills">Skills</a>
-        <a href="#experience">Experience</a>
-        <a href="#writing">Writing</a>
-        <a href="#contact">Contact</a>
-        <button class="theme-toggle" id="theme-toggle" type="button"
-                aria-pressed="false" aria-label="Switch to light theme">
-          <svg class="icon icon-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-            <circle cx="12" cy="12" r="4"></circle>
-            <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>
-          </svg>
-          <svg class="icon icon-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-            <path d="M20 14.5A8 8 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"></path>
-          </svg>
-        </button>
-      </nav>
+      <div id="sections"></div>
+    </main>
+
+    <footer class="row foot" id="footer-row" hidden>
+      <div class="col-left"></div>
+      <div class="col-right" id="footer"></div>
+    </footer>
+  </div>
+
+  <!-- Project Side Drawer -->
+  <div id="drawer-backdrop" class="drawer-backdrop" hidden></div>
+  <aside id="project-drawer" class="drawer" aria-hidden="true" aria-labelledby="drawer-title" inert>
+    <div class="drawer-head">
+      <span class="drawer-year" id="drawer-year"></span>
+      <button type="button" id="drawer-close" class="drawer-close" aria-label="Close project details">close ×</button>
     </div>
-  </header>
-
-  <!-- Decorative depth marker. Hidden below 1280px. -->
-  <aside class="layer-rail" aria-hidden="true">
-    <span class="rail-track"></span>
-    <span class="rail-node is-active" data-section="hero"><span class="rail-dot"></span><span class="rail-label">L0</span></span>
-    <span class="rail-node" data-section="about"><span class="rail-dot"></span><span class="rail-label">L1</span></span>
-    <span class="rail-node" data-section="projects"><span class="rail-dot"></span><span class="rail-label">L2</span></span>
-    <span class="rail-node" data-section="skills"><span class="rail-dot"></span><span class="rail-label">L3</span></span>
-    <span class="rail-node" data-section="experience"><span class="rail-dot"></span><span class="rail-label">L4</span></span>
-    <span class="rail-node" data-section="writing"><span class="rail-dot"></span><span class="rail-label">L5</span></span>
-    <span class="rail-node" data-section="contact"><span class="rail-dot"></span><span class="rail-label">L6</span></span>
+    <div class="drawer-body">
+      <h2 id="drawer-title" class="drawer-title"></h2>
+      <div id="drawer-media" class="drawer-media" hidden></div>
+      <p id="drawer-desc" class="drawer-desc"></p>
+      <p id="drawer-tags" class="drawer-tags"></p>
+      <div id="drawer-links" class="drawer-links"></div>
+    </div>
   </aside>
 
-  <main id="main">
-    <!-- ================================================================
-         HERO — L0 · EMBEDDING
-         ================================================================ -->
-    <section class="hero" id="hero" aria-labelledby="hero-title">
-      <div class="container hero-grid">
-        <div class="hero-copy">
-          <p class="kicker">
-            <span class="live-dot" aria-hidden="true"></span>
-            <span id="hero-kicker">L0 · EMBEDDING</span>
-          </p>
-
-          <h1 class="hero-title" id="hero-title" data-tokenize>[YOUR NAME]</h1>
-
-          <p class="hero-role mono">
-            <span id="hero-role">[YOUR ROLE]</span>
-            <span class="sep" aria-hidden="true">/</span>
-            <span id="hero-location">[CITY, COUNTRY]</span>
-          </p>
-
-          <p class="hero-lede" id="hero-lede">
-            <span class="sr-only" id="hero-lede-sr">[I BUILD THINGS WITH MODELS, DATA, AND CARE.]</span>
-            <span class="typed-target" id="hero-typed" aria-hidden="true"></span><span class="caret" id="hero-caret" aria-hidden="true"></span>
-          </p>
-
-          <p class="hero-summary" id="hero-summary"></p>
-
-          <div class="hero-actions" id="hero-actions"></div>
-
-          <p class="hero-status mono" id="hero-status"></p>
-        </div>
-
-        <div class="hero-panel">
-          <figure class="attention-figure" aria-labelledby="panel-label">
-            <div class="panel-bar">
-              <span class="mono" id="panel-label">HEAD 03 · LAYER 02</span>
-              <span class="panel-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-            </div>
-            <div class="canvas-wrap">
-              <canvas id="attention-canvas" width="640" height="360" aria-hidden="true"></canvas>
-              <div class="canvas-axes mono" aria-hidden="true">
-                <span id="axis-y">queries ↓</span>
-                <span id="axis-x">keys →</span>
-              </div>
-            </div>
-            <figcaption class="mono" id="panel-caption">simulated self-attention · move your cursor</figcaption>
-          </figure>
-
-          <div class="temp-control">
-            <div class="temp-row">
-              <label for="temperature" class="mono">Temperature</label>
-              <output class="mono" id="temp-value" for="temperature">0.90</output>
-            </div>
-            <input type="range" id="temperature" min="0.2" max="2" step="0.05" value="0.9"
-                   aria-describedby="temp-note">
-            <div class="temp-scale mono" aria-hidden="true">
-              <span>sharp / focused</span>
-              <span>soft / diffuse</span>
-            </div>
-            <p class="temp-note" id="temp-note">Temperature changes how sharply the attention heatmap responds to your cursor.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="container hero-foot">
-        <a href="#about" class="scroll-cue mono">
-          <span id="scroll-cue">scroll = forward pass</span>
-          <span class="scroll-arrow" aria-hidden="true">↓</span>
-        </a>
-        <span class="mono hero-index" aria-hidden="true">L0 / L6</span>
-      </div>
-    </section>
-
-    <!-- ================================================================
-         ABOUT — L1 · FEED-FORWARD
-         ================================================================ -->
-    <section class="section" id="about" aria-labelledby="about-heading">
-      <div class="container">
-        <header class="section-head">
-          <p class="kicker" id="about-kicker">L1 · FEED-FORWARD</p>
-          <h2 id="about-heading">The human in the loop</h2>
-        </header>
-
-        <div class="about-grid">
-          <div class="prose reveal" id="about-body"></div>
-
-          <div class="residual-panel reveal" role="group" aria-labelledby="about-heading2">
-            <h3 class="mono panel-title" id="about-heading2">Residual stream</h3>
-            <ul class="fact-list" id="about-facts"></ul>
-            <blockquote class="pull-quote" id="about-quote" hidden>
-              <p id="about-quote-text"></p>
-              <cite id="about-quote-cite"></cite>
-            </blockquote>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================================================================
-         PROJECTS — L2 · ATTENTION
-         ================================================================ -->
-    <section class="section" id="projects" aria-labelledby="projects-heading">
-      <div class="container">
-        <header class="section-head split">
-          <div>
-            <p class="kicker" id="projects-kicker">L2 · ATTENTION</p>
-            <h2 id="projects-heading">Selected work</h2>
-            <p class="section-intro" id="projects-intro"></p>
-          </div>
-          <p class="mono section-meta" id="projects-count"></p>
-        </header>
-
-        <div class="projects-layout">
-          <div class="projects-grid" id="projects-grid"></div>
-
-          <div class="attention-panel reveal" role="group" aria-labelledby="attn-heading">
-            <div class="panel-bar">
-              <h3 class="mono" id="attn-heading">Project → skill attention</h3>
-              <span class="mono" id="attn-head">HEAD 04 / L2</span>
-            </div>
-            <div class="attn-tabs" id="attn-tabs" role="group" aria-label="Select a project"></div>
-            <div class="attn-grid" id="attn-grid" role="img"
-                 aria-label="Simulated attention map connecting projects to skills"></div>
-            <p class="attn-readout" id="attn-readout" aria-live="polite"></p>
-            <p class="attn-note mono" id="attn-note"></p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Loss curve: a quiet scroll moment between projects and skills. -->
-    <div class="loss-divider" aria-hidden="true">
-      <div class="container loss-inner">
-        <div class="loss-copy mono">
-          <span>training loss</span>
-          <span class="loss-arrow">↓</span>
-        </div>
-        <svg class="loss-svg" viewBox="0 0 600 160" preserveAspectRatio="none" focusable="false">
-          <g class="loss-gridlines">
-            <path d="M0 40H600M0 80H600M0 120H600"></path>
-            <path d="M150 0V160M300 0V160M450 0V160"></path>
-          </g>
-          <path class="loss-path" pathLength="1"
-                d="M0 18 L18 26 L30 22 L48 40 L62 36 L78 55 L96 50 L112 68 L132 64 L150 82 L172 76 L190 94 L214 88 L236 104 L262 100 L286 114 L312 108 L338 122 L366 117 L392 128 L420 124 L450 133 L480 130 L520 138 L560 136 L600 141"></path>
-          <circle class="loss-dot" cx="598" cy="141" r="4"></circle>
-        </svg>
-        <span class="mono loss-caption">step → · scroll to converge</span>
-      </div>
-    </div>
-
-    <!-- ================================================================
-         SKILLS — L3 · KEY / VALUE SPACE
-         ================================================================ -->
-    <section class="section" id="skills" aria-labelledby="skills-heading">
-      <div class="container">
-        <header class="section-head">
-          <p class="kicker" id="skills-kicker">L3 · KEY / VALUE</p>
-          <h2 id="skills-heading">What I work with</h2>
-          <p class="section-intro" id="skills-intro"></p>
-        </header>
-
-        <p class="skills-status mono" id="skills-status" aria-live="polite"></p>
-        <div class="skill-groups" id="skill-groups"></div>
-      </div>
-    </section>
-
-    <!-- ================================================================
-         EXPERIENCE / EDUCATION — L4 · RESIDUAL STREAM
-         ================================================================ -->
-    <section class="section" id="experience" aria-labelledby="experience-heading">
-      <div class="container">
-        <header class="section-head">
-          <p class="kicker" id="experience-kicker">L4 · RESIDUAL</p>
-          <h2 id="experience-heading">Experience</h2>
-        </header>
-
-        <div class="timeline-grid">
-          <div class="timeline" id="experience-list"></div>
-
-          <div class="education-block reveal" role="group" aria-labelledby="education-heading">
-            <h3 class="mono panel-title" id="education-heading">Education</h3>
-            <div class="timeline timeline--compact" id="education-list"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================================================================
-         WRITING — L5 · OUTPUT TOKENS (optional)
-         ================================================================ -->
-    <section class="section" id="writing" aria-labelledby="writing-heading">
-      <div class="container">
-        <header class="section-head">
-          <p class="kicker" id="writing-kicker">L5 · OUTPUT</p>
-          <h2 id="writing-heading">Writing</h2>
-          <p class="section-intro" id="writing-intro"></p>
-        </header>
-
-        <ol class="writing-list" id="writing-list"></ol>
-      </div>
-    </section>
-
-    <!-- ================================================================
-         CONTACT — L6 · OUTPUT / SOFTMAX
-         ================================================================ -->
-    <section class="section contact" id="contact" aria-labelledby="contact-heading">
-      <div class="container contact-inner">
-        <p class="kicker" id="contact-kicker">L6 · OUTPUT</p>
-        <h2 id="contact-heading">Let's build something</h2>
-        <p class="contact-blurb" id="contact-blurb"></p>
-
-        <div class="contact-actions" id="contact-actions"></div>
-
-        <ul class="contact-links" id="contact-links"></ul>
-
-        <p class="contact-closing" id="contact-closing"></p>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <div class="model-card mono" id="model-card"></div>
-      <div class="footer-bottom">
-        <p>© <span id="year">2026</span> <span id="footer-name">[YOUR NAME]</span></p>
-        <p id="footer-built"></p>
-        <p>Updated <span id="footer-updated">[MONTH YEAR]</span></p>
-      </div>
-    </div>
-  </footer>
-
-  <noscript>
-    <style>
-      .site-nav { display: flex !important; position: static !important; }
-      .nav-toggle { display: none !important; }
-      .js-only { display: none !important; }
-    </style>
-    <p class="noscript-note">
-      This portfolio renders its content with JavaScript. Enable JavaScript to view it.
-      You can also read everything in <code>docs/content.js</code>.
-    </p>
-  </noscript>
-
+  <noscript><p class="page">This site needs JavaScript to show its content.</p></noscript>
   <script src="content.js"></script>
-  <script src="js/main.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>

@@ -1,16 +1,13 @@
 # [YOUR NAME] — portfolio
 
-A static, zero-build personal portfolio with a Transformer / attention theme.
-Pure HTML, CSS, and vanilla JavaScript. No frameworks, no dependencies, no
-trackers, no build step. Everything is deployed straight from the `docs/`
-folder on GitHub Pages.
+A static, zero-build personal portfolio: HTML, CSS, and vanilla JavaScript,
+deployed straight from `docs/` on GitHub Pages. No frameworks, no bundler,
+no trackers.
 
-**Concept — “Depth”:** the page is a forward pass through a network. The hero is
-the embedding layer (L0), and each section moves one layer deeper: attention,
-key/value space, the residual stream, output tokens, and the final output. The
-hero has a cursor-reactive attention heatmap and a temperature slider; the
-projects section has a simulated attention map that links projects to skills;
-a small loss curve draws itself on scroll.
+The page uses a warm editorial layout on a grid-paper background image. The
+top navigation has three tabs: **about**, **projects**, and **writing**.
+Clicking a project title opens a side drawer with the long description, media,
+tags, and links.
 
 ---
 
@@ -23,17 +20,15 @@ cd /home/om/website
 python3 -m http.server 8000 --directory docs
 ```
 
-Open <http://localhost:8000>.
+Open <http://localhost:8000>. Stop the server with `Ctrl+C`.
 
-If you have Node.js instead, either of these works:
+With Node.js instead:
 
 ```bash
 npx serve docs
 # or
 npx http-server docs -p 8000
 ```
-
-Stop the server with `Ctrl+C`.
 
 ---
 
@@ -42,116 +37,103 @@ Stop the server with `Ctrl+C`.
 **You only need to edit `docs/content.js`.** Every visible string is there,
 with comments explaining each field. Replace the `[SQUARE BRACKET]` placeholders.
 
-What lives where:
-
-| Field | Used for |
+| Field | Used on the page |
 | --- | --- |
-| `meta` | Browser tab, search/social previews, name, role, location, email |
-| `hero` | Headline, typed line, summary, buttons, status, temperature copy |
-| `about` | Paragraphs, facts sidebar, optional pull quote |
-| `projects` | Project cards, links, stack tags, and which skills each project “attends” to |
-| `skills` | Grouped skill chips |
-| `experience` / `education` | Timelines |
-| `writing` | Optional writing list. Set `items: []` to hide the section |
-| `contact` | Email and social links |
-| `footer` | Model-card metadata and last-updated line |
+| `meta` | Browser tab, description, name, role, location, optional avatar |
+| `hero` | Headline, typed line, summary |
+| `about` | Paragraphs and fact list |
+| `projects` | Project list and the side drawer |
+| `writing` | Writing list |
+| `footer` | Small footer line |
 
-### Important: project ↔ skill matching
+`skills`, `experience`, `education`, and `contact` are still in `content.js`
+but are not rendered while the navigation is limited to about / projects /
+writing. Set `writing.items: []` to hide the writing section and its tab.
 
-The attention map connects a project to a skill when the **exact same string**
-appears in both:
+### Project drawer fields
 
-```js
-// content.js
-projects.items[0].skills: ["[SKILL 01]", "[SKILL 02]"]
-skills.groups[0].items:     ["[SKILL 01]", "[SKILL 02]", "[SKILL 03]"]
-```
-
-The first skill in a project’s list gets the strongest attention weight.
-The matrix shows up to 10 unique skills, labelled `S1…S10`. Hover a cell for
-the full skill name; the readout below the matrix names them in full.
-
-### Placeholder links
-
-Links containing `[ ]` or `< >` are rendered as plain text and marked “Add link”
-instead of becoming dead links. Replace them with real URLs:
+Each project can include:
 
 ```js
-href: "https://github.com/your-handle/project"
+{
+  title: "Project name",
+  year: "2026",
+  description: "Short line shown in the list.",
+  longDescription: "Longer text shown inside the drawer.",
+  skills: ["Skill A", "Skill B"],      // shown as tags
+  media: "assets/project.jpg",          // optional image, or .mp4/.webm/.ogg
+  href: "https://example.com",          // live demo
+  repo: "https://github.com/...",       // source
+  linkLabel: "visit site"
+}
 ```
 
-External links open in a new tab with `rel="noopener noreferrer"`.
+Links containing `[ ]` or `< >` are rendered as plain text marked “pending”
+instead of dead links. External links open in a new tab.
 
-### Other things you may want to change
+### Background image
 
-- **Default temperature:** `value="0.9"` on the range input in `docs/index.html`.
-- **Default theme:** dark. The light (warm beige) theme is remembered in
-  `localStorage`.
-- **Colours and type:** all design tokens are at the top of
-  `docs/css/styles.css` under `:root` and `html[data-theme="light"]`.
-- **No external fonts:** the site uses a system sans stack and a system mono
-  stack, so there are no font requests to block rendering.
+The page background is `docs/assets/grid-bg.jpg`, applied in `docs/styles.css`:
+
+```css
+background-image:
+  linear-gradient(var(--veil), var(--veil)),
+  url("assets/grid-bg.jpg");
+```
+
+`--veil` is a translucent cream layer that keeps the grid and pink stripe
+visible while preserving text contrast. Adjust it at the top of
+`docs/styles.css` if you swap in a different image.
+
+### Other things to change
+
+- **Colours and type:** design tokens at the top of `docs/styles.css` (`:root`).
+- **Fonts:** IBM Plex Mono is loaded from Google Fonts in `docs/index.html`.
+  Remove those three `<link>` tags to fall back to the system mono stack.
 - **Favicon:** `docs/assets/favicon.svg`.
+- **Page title and description:** also set from `content.js` at load time.
 
 ---
 
 ## 2. Publish on GitHub Pages
 
-This project is set up to deploy from the **`docs/` folder on the `main`
-branch** — the simplest option for a static site with no build step.
+This project deploys from the **`docs/` folder on `main`**.
 
 ### First-time publish
 
-Create an empty repository on GitHub first (no README, no `.gitignore`), then:
+Create an empty repository on GitHub first, then:
 
 ```bash
 cd /home/om/website
-git init -b main
-git add .
-git commit -m "Initial portfolio"
 git remote add origin https://github.com/<username>/<repo>.git
 git push -u origin main
 ```
 
-Then in the GitHub repository:
+Then in the repository:
 
-1. Go to **Settings → Pages**.
-2. Under **Build and deployment → Source**, choose **Deploy from a branch**.
-3. Choose branch **`main`** and folder **`/docs`**.
-4. Click **Save**.
-5. Wait for the first deploy (usually under a minute).
+1. **Settings → Pages**
+2. **Source:** Deploy from a branch
+3. **Branch:** `main` — **Folder:** `/docs`
+4. **Save**
 
-Your site will be at:
+The site appears at `https://<username>.github.io/<repo>/`. If the repository
+is named `<username>.github.io`, it is served at the root domain instead.
 
-```
-https://<username>.github.io/<repo>/
-```
-
-If you name the repository `<username>.github.io`, it will be served at
-`https://<username>.github.io/` instead.
-
-### Updating the site
+### Updating
 
 ```bash
 cd /home/om/website
 git add .
-git commit -m "Update portfolio content"
+git commit -m "Update portfolio"
 git push
 ```
 
-GitHub Pages redeploys automatically. Hard-refresh (Ctrl/Cmd + Shift + R) if
-you don’t see changes immediately.
-
-### After the first deploy
-
-Update `meta.siteUrl` in `docs/content.js` to your real Pages URL, and update
-the placeholder `og:url` in `docs/index.html`. Commit and push again.
+Hard-refresh (Ctrl/Cmd + Shift + R) if changes do not appear immediately.
 
 ### Custom domain (optional)
 
-Add a file `docs/CNAME` containing your domain (for example
-`www.yourdomain.com`), configure the DNS records GitHub documents, and set the
-custom domain in **Settings → Pages**.
+Add `docs/CNAME` containing your domain, configure the DNS records GitHub
+documents, and set the domain under **Settings → Pages**.
 
 ---
 
@@ -161,85 +143,46 @@ custom domain in **Settings → Pages**.
 website/
 ├── README.md
 ├── .gitignore
-└── docs/                  ← this folder is published by GitHub Pages
-    ├── index.html         semantic markup + static nav
+└── docs/                  ← published by GitHub Pages
+    ├── index.html         page shell and drawer markup
     ├── content.js         ← EDIT THIS FILE
-    ├── .nojekyll          tells Pages to serve files as-is
-    ├── css/
-    │   └── styles.css     design tokens, layout, responsive, reduced motion
-    ├── js/
-    │   └── main.js        rendering, interactions, attention map, canvas
+    ├── main.js            renders sections, nav, and project drawer
+    ├── styles.css         theme, grid-paper background, responsive rules
+    ├── .nojekyll          serve files as-is
     └── assets/
+        ├── grid-bg.jpg    page background
         └── favicon.svg
 ```
 
-There is no build step and no `node_modules`. GitHub Pages serves the files
-exactly as they are.
+There is no build step and no `node_modules`.
 
 ---
 
-## 4. How the interactions work
+## 4. Accessibility notes
 
-| Interaction | Implementation |
-| --- | --- |
-| Token-by-token hero typing | `setTimeout` loop in `main.js`; completed instantly for reduced motion |
-| Cursor attention heatmap | Each headline token gets a `--heat` CSS variable based on cursor distance and temperature |
-| Attention canvas | Canvas 2D grid, one redraw per pointer frame (no continuous loop), DPR capped at 2, paused offscreen, static first frame for reduced motion |
-| Temperature slider | Changes the Gaussian spread of the token heat, canvas heatmap, and glow radius |
-| Project ↔ skill attention map | Generated from matching strings in `content.js`; supports project tabs and keyboard-accessible skill buttons |
-| Loss curve | SVG path with `stroke-dashoffset`, triggered once by `IntersectionObserver` |
-| Scroll reveals | `IntersectionObserver` + CSS transitions; motion only under `prefers-reduced-motion: no-preference` |
-| Nav progress / active section | CSS scroll timeline where supported; active nav via `IntersectionObserver` |
+- Semantic `header` / `main` / `footer`, one `h1`, labelled nav, skip link.
+- Project titles are real buttons; the drawer traps nothing but closes with
+  Escape and returns focus to the project title.
+- The closed drawer uses `aria-hidden` plus `inert`, so its controls are not
+  focusable until opened.
+- Colour tokens target WCAG AA contrast over the veiled background.
+- Content is rendered with JavaScript; a `<noscript>` note explains this.
+- The page respects `prefers-reduced-motion` for the smooth scrolling.
 
-### Accessibility notes
-
-- Semantic landmarks, one `h1`, labelled sections, skip link.
-- All interactive controls are real buttons or links with visible focus rings.
-- The attention canvas and matrix are decorative; the same relationships are
-  written in text in the live readout and the project stack lists.
-- `prefers-reduced-motion: reduce` removes typing, reveals, pulsing, and canvas
-  pointer motion, and shows the final states immediately.
-- Theme is toggleable and persisted. Colour tokens target WCAG AA contrast.
-- Content is rendered with JavaScript. A `<noscript>` note explains this.
+A Chrome + axe-core check of the current build reports **0 violations**.
 
 ---
 
-## 5. Lighthouse
-
-The site ships no images, web fonts, or third-party scripts, and the JavaScript
-is small. A local Chrome audit of this build measured:
-
-- **axe-core:** 0 accessibility violations (colour contrast checked manually
-  against the token palette; axe cannot resolve the decorative gradients).
-- **Mobile, 4× CPU throttle + slow 4G:** LCP ≈ 0.56s, CLS ≈ 0.001, no long
-  tasks after load, ~107 KB of local assets.
-- **Desktop:** LCP ≈ 0.08s, no console errors, no horizontal overflow from
-  360px to 1440px.
-
-To keep the score high:
-
-- Run Lighthouse against the **deployed HTTPS URL** (or `localhost`), in an
-  incognito window with extensions disabled.
-- Keep large images out of `assets/` unless necessary; if you add project
-  screenshots, use WebP/AVIF, explicit `width`/`height`, and `loading="lazy"`.
-- Avoid adding analytics scripts or heavy animation libraries.
-
----
-
-## 6. Placeholder checklist
+## 5. Placeholder checklist
 
 Search `docs/content.js` for `[` and replace:
 
-- [ ] Name, role, location, availability, email
-- [ ] Hero typed line, summary, status
-- [ ] About paragraphs, facts, quote
-- [ ] Project titles, descriptions, years, links, stack, skills
-- [ ] Skill group names and items (keep project references matching)
-- [ ] Experience and education entries
+- [ ] Name, role, location, email
+- [ ] Hero line and summary
+- [ ] About paragraphs and facts
+- [ ] Project titles, descriptions, years, tags, links and media
 - [ ] Writing posts (or set `items: []`)
-- [ ] Contact links and résumé URL
-- [ ] Footer metadata and last-updated date
-- [ ] `meta.siteUrl` and the `og:url` in `index.html` after deploying
+- [ ] Footer line
 
 ---
 
