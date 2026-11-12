@@ -27,11 +27,11 @@ window.SITE_CONTENT = {
      Used for the browser tab, search results, and social previews.
      ----------------------------------------------------------------------- */
   meta: {
-    name: "[YOUR NAME]",
-    role: "[YOUR ROLE]",
-    siteTitle: "[YOUR NAME] — [YOUR ROLE]",
-    description: "[ONE SENTENCE ABOUT WHAT YOU DO AND WHO YOU HELP.]",
-    location: "[CITY, COUNTRY]",
+    name: "Om Sontakke",
+    role: "SY Extc",
+    siteTitle: "Om Sontakke — SY Extc",
+    description: "I am a 19 year old engineering student just building what i like :)",
+    location: "Mumbai, India",
 
     // Optional small portrait beside the hero. Leave empty to hide it.
     // Put the file in docs/assets/ and use "assets/your-photo.jpg".
@@ -44,11 +44,11 @@ window.SITE_CONTENT = {
      ----------------------------------------------------------------------- */
   hero: {
     // Large heading.
-    headline: "[YOUR NAME]",
+    headline: "Om Sontakke",
     // One line under the heading.
-    typedLine: "[I BUILD THINGS WITH MODELS, DATA, AND CARE.]",
-    // A slightly longer introduction under that line.
-    summary: "[TWO SENTENCES ABOUT YOUR WORK, YOUR FOCUS, AND WHAT YOU ARE LOOKING FOR.]",
+    typedLine: "I am a 19 year old engineering student just building what i like :)",
+    // Optional second line. Leave empty to hide it.
+    summary: "",
   },
 
   /* -----------------------------------------------------------------------
@@ -66,7 +66,7 @@ window.SITE_CONTENT = {
 
     // Small facts shown under the paragraphs. Keep values short.
     facts: [
-      { label: "Based in", value: "[CITY, COUNTRY]" },
+      { label: "Based in", value: "Mumbai, India" },
       { label: "Focus", value: "[YOUR FOCUS AREA]" },
       { label: "Currently", value: "[WHAT YOU ARE DOING NOW]" },
       { label: "Off-screen", value: "[A HOBBY OR INTEREST]" },
@@ -76,7 +76,7 @@ window.SITE_CONTENT = {
     // "assets/me.jpg". Leave photo empty to hide it.
     // It is capped at 340px wide and keeps its aspect ratio.
     photo: "",
-    photoAlt: "Portrait of [YOUR NAME]",
+    photoAlt: "Portrait of Om Sontakke",
     photoCaption: "", // optional line under the photo
   },
 
