@@ -41,7 +41,7 @@ with comments explaining each field. Replace the `[SQUARE BRACKET]` placeholders
 | --- | --- |
 | `meta` | Browser tab, description, name, role, location, optional avatar |
 | `hero` | Headline, typed line, summary |
-| `about` | Paragraphs and fact list |
+| `about` | Paragraphs, fact list, and optional portrait photo |
 | `projects` | Project list and the side drawer |
 | `writing` | Writing list |
 | `footer` | Small footer line |
@@ -49,6 +49,21 @@ with comments explaining each field. Replace the `[SQUARE BRACKET]` placeholders
 `skills`, `experience`, `education`, and `contact` are still in `content.js`
 but are not rendered while the navigation is limited to about / projects /
 writing. Set `writing.items: []` to hide the writing section and its tab.
+
+### Add your photo
+
+Put the image in `docs/assets/` (for example `docs/assets/me.jpg`), then set
+the `photo` field inside `about` in `docs/content.js`:
+
+```js
+photo: "assets/me.jpg",
+photoAlt: "Portrait of Your Name",
+photoCaption: "", // optional line under the photo
+```
+
+The photo appears below the About text and above Projects. It is capped at
+340px wide, keeps its aspect ratio, and scales down on mobile. Leave `photo`
+empty to hide it.
 
 ### Project drawer fields
 

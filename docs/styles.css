@@ -207,6 +207,27 @@ section.row {
   color: var(--ink);
 }
 
+/* Optional portrait under the About text */
+.about-photo {
+  margin-top: 28px;
+}
+
+.about-photo img {
+  display: block;
+  width: 100%;
+  max-width: 340px;
+  height: auto;
+  border: 1px solid var(--rule);
+}
+
+.about-photo figcaption {
+  max-width: 340px;
+  margin-top: 8px;
+  font-size: 11.5px;
+  font-style: italic;
+  color: var(--muted);
+}
+
 /* Entries (Projects, Writing, Experience) */
 .entry-list {
   display: flex;

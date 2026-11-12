@@ -192,6 +192,21 @@
       });
       abRight.appendChild(ul);
     }
+
+    if (A.photo && !/[\[\]<>]/.test(A.photo)) {
+      var figure = h('figure', 'about-photo');
+      var photo = document.createElement('img');
+      photo.src = A.photo.trim();
+      photo.alt = A.photoAlt || (M.name ? 'Portrait of ' + M.name : 'Portrait');
+      photo.loading = 'lazy';
+      photo.decoding = 'async';
+      figure.appendChild(photo);
+      if (A.photoCaption) {
+        figure.appendChild(h('figcaption', '', A.photoCaption));
+      }
+      abRight.appendChild(figure);
+    }
+
     nav.push(['about', 'about']);
   }
 
