@@ -72,7 +72,8 @@ window.SITE_CONTENT = {
     // Links shown under a horizontal line at the end of About.
     // Replace the placeholder URLs with your real profiles.
     connect: [
-      { label: "github", href: "[GITHUB URL]" },
+      { label: "email", href: "mailto:[EMAIL ADDRESS]" },
+      { label: "github", href: "https://github.com/OMSONTAKKE003" },
       { label: "linkedin", href: "[LINKEDIN URL]" },
       { label: "x", href: "[X URL]" },
     ],
@@ -96,7 +97,7 @@ window.SITE_CONTENT = {
         title: "Amazedex",
         year: "2026",
         description: "",
-        longDescription: "Trying dextrous manipulation on Amazing hand using reinforcement learning",
+        longDescription: "Training a multi-fingered robotic hand to autonomously rotate a cube to any target orientation using deep reinforcement learning, on the Amazing Hand",
 
         // Tags shown under the description.
        

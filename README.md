@@ -67,6 +67,7 @@ links. Edit `about.connect` in `docs/content.js`:
 
 ```js
 connect: [
+  { label: "email", href: "mailto:you@example.com" },
   { label: "github", href: "https://github.com/your-handle" },
   { label: "linkedin", href: "https://linkedin.com/in/your-handle" },
   { label: "x", href: "https://x.com/your-handle" },
