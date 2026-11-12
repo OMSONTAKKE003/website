@@ -1,0 +1,10 @@
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/
+
+# If you ever add tooling locally, keep these out of the repo
+node_modules/
+.env
