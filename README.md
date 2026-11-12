@@ -60,6 +60,21 @@ photoCaption: "", // optional line under the photo
 The photo appears below the About text. It is capped at 340px wide, keeps its
 aspect ratio, and scales down on mobile. Leave `photo` empty to hide it.
 
+### Connect links
+
+At the end of the About section, a horizontal line is followed by your social
+links. Edit `about.connect` in `docs/content.js`:
+
+```js
+connect: [
+  { label: "github", href: "https://github.com/your-handle" },
+  { label: "linkedin", href: "https://linkedin.com/in/your-handle" },
+  { label: "x", href: "https://x.com/your-handle" },
+],
+```
+
+Set `connect: []` to hide the line and links entirely.
+
 ### Projects and media
 
 Each project on `projects.html` can include text on the left and media on the

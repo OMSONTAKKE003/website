@@ -121,6 +121,15 @@
       });
     }
 
+    var connect = $('about-connect');
+    if (connect) {
+      (A.connect || []).forEach(function (c) {
+        if (!c || !c.label) return;
+        connect.appendChild(link(c.href, c.label, 'connect-link'));
+      });
+      if (!connect.children.length) connect.hidden = true;
+    }
+
     var photoSlot = $('about-photo');
     if (photoSlot && !isPlaceholder(A.photo)) {
       var figure = h('figure', 'about-photo');

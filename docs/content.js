@@ -45,7 +45,7 @@ window.SITE_CONTENT = {
     // Large heading.
     headline: "Om Sontakke",
     // One line under the heading.
-    typedLine: "I am a 19 year old engineering student just building what i like :)",
+    typedLine: "The only way out is through",
     // Optional second line. Leave empty to hide it.
     summary: "",
   },
@@ -58,17 +58,23 @@ window.SITE_CONTENT = {
   about: {
     // Add or remove paragraphs freely.
     paragraphs: [
-      "[PARAGRAPH ONE — WHO YOU ARE, WHAT YOU WORK ON, AND WHAT YOU CARE ABOUT.]",
-      "[PARAGRAPH TWO — HOW YOU GOT HERE, AND THE KIND OF PROBLEMS YOU LIKE.]",
-      "[PARAGRAPH THREE — SOMETHING HUMAN: WHAT YOU DO OUTSIDE OF WORK.]",
+      "Hello !,I am Om ,a 19 year old engineering student working on language models and robotics",
+      "Apart from work i like playing chess(terible at it) and travel."
     ],
 
     // Small facts shown under the paragraphs. Keep values short.
     facts: [
       { label: "Based in", value: "Mumbai, India" },
-      { label: "Focus", value: "[YOUR FOCUS AREA]" },
-      { label: "Currently", value: "[WHAT YOU ARE DOING NOW]" },
-      { label: "Off-screen", value: "[A HOBBY OR INTEREST]" },
+      { label: "Currently", value: "Working on language models and  intelligence" },
+      { label: "Skill", value: "Python,Reinforcement learning,LLMs." },
+    ],
+
+    // Links shown under a horizontal line at the end of About.
+    // Replace the placeholder URLs with your real profiles.
+    connect: [
+      { label: "github", href: "[GITHUB URL]" },
+      { label: "linkedin", href: "[LINKEDIN URL]" },
+      { label: "x", href: "[X URL]" },
     ],
 
     // Your photo. Put the image in docs/assets/ and use a path like
@@ -87,13 +93,13 @@ window.SITE_CONTENT = {
   projects: {
     items: [
       {
-        title: "[PROJECT TITLE 01]",
-        year: "[YEAR]",
-        description: "[SHORT DESCRIPTION FOR THE PROJECT LIST.]",
-        longDescription: "[LONGER DESCRIPTION — THE PROBLEM, YOUR APPROACH, AND THE RESULT.]",
+        title: "Amazedex",
+        year: "2026",
+        description: "",
+        longDescription: "Trying dextrous manipulation on Amazing hand using reinforcement learning",
 
         // Tags shown under the description.
-        skills: ["[TAG 01]", "[TAG 02]", "[TAG 03]"],
+       
 
         // Put files in docs/assets/ and list them here. Images and
         // .mp4 / .webm / .ogg videos are supported.
@@ -102,34 +108,7 @@ window.SITE_CONTENT = {
         mediaAlt: "Screenshot of [PROJECT TITLE 01]",
         mediaCaption: "", // optional line under the media
 
-        href: "[PROJECT LINK]",
-        repo: "[REPOSITORY LINK]",
-        linkLabel: "visit project",
-      },
-      {
-        title: "[PROJECT TITLE 02]",
-        year: "[YEAR]",
-        description: "[SHORT DESCRIPTION FOR THE PROJECT LIST.]",
-        longDescription: "[LONGER DESCRIPTION.]",
-        skills: ["[TAG 01]", "[TAG 02]"],
-        media: [],
-        mediaAlt: "Screenshot of [PROJECT TITLE 02]",
-        mediaCaption: "",
-        href: "[PROJECT LINK]",
-        repo: "[REPOSITORY LINK]",
-        linkLabel: "visit project",
-      },
-      {
-        title: "[PROJECT TITLE 03]",
-        year: "[YEAR]",
-        description: "[SHORT DESCRIPTION FOR THE PROJECT LIST.]",
-        longDescription: "[LONGER DESCRIPTION.]",
-        skills: ["[TAG 01]", "[TAG 02]"],
-        media: [],
-        mediaAlt: "Screenshot of [PROJECT TITLE 03]",
-        mediaCaption: "",
-        href: "[PROJECT LINK]",
-        repo: "[REPOSITORY LINK]",
+        repo: "https://github.com/OMSONTAKKE003/AmazeDex",
         linkLabel: "visit project",
       },
     ],
