@@ -23,6 +23,12 @@ body {
   font: 400 13.5px/1.75 var(--mono);
   min-height: 100vh;
   background-color: var(--bg);
+  background-image:
+    linear-gradient(rgba(38, 35, 31, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(38, 35, 31, 0.045) 1px, transparent 1px);
+  background-size: 80px 80px, 80px 80px;
+  background-position: center, center;
+  background-attachment: fixed, fixed;
   -webkit-font-smoothing: antialiased;
   padding: 44px 24px 96px;
 }

@@ -121,19 +121,22 @@ Add posts to `writing.items`:
 Set `writing.items: []` and the page shows `writing.empty`, which defaults to
 `"stay tuned :)"`.
 
-### Background image
+### Background
 
-The page background is `docs/assets/grid-bg.jpg`, applied in `docs/styles.css`:
+The page uses a solid beige background (`--bg: #f2e7d3`) with a faint CSS
+grid drawn by repeating gradients in `docs/styles.css`:
 
 ```css
+background-color: var(--bg);
 background-image:
-  linear-gradient(var(--veil), var(--veil)),
-  url("assets/grid-bg.jpg");
+  linear-gradient(rgba(38, 35, 31, 0.045) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(38, 35, 31, 0.045) 1px, transparent 1px);
+background-size: 80px 80px, 80px 80px;
 ```
 
-`--veil` is a translucent cream layer that keeps the grid and pink stripe
-visible while preserving text contrast. Adjust it at the top of
-`docs/styles.css` if you swap in a different image.
+Change `--bg` for a different base colour, adjust the alpha for a stronger or
+fainter grid, or change `80px` for a larger/smaller cell size. The old
+`docs/assets/grid-bg.jpg` image is no longer used.
 
 ### Other things to change
 
