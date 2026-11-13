@@ -66,7 +66,7 @@ window.SITE_CONTENT = {
     facts: [
       { label: "Based in", value: "Mumbai, India" },
       { label: "Currently", value: "Working on language models and  intelligence" },
-      { label: "Skill", value: "Python,Reinforcement learning,LLMs,C/C++" },
+      { label: "Skill", value: "Python,Reinforcement learning,C/C++" },
     ],
 
     // Links shown under a horizontal line at the end of About.
