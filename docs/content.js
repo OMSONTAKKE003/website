@@ -66,7 +66,7 @@ window.SITE_CONTENT = {
     facts: [
       { label: "Based in", value: "Mumbai, India" },
       { label: "Currently", value: "Working on language models and  intelligence" },
-      { label: "Skill", value: "Python,Reinforcement learning,LLMs." },
+      { label: "Skill", value: "Python,Reinforcement learning,LLMs,C/C++" },
     ],
 
     // Links shown under a horizontal line at the end of About.
@@ -105,7 +105,7 @@ window.SITE_CONTENT = {
         // Put files in docs/assets/ and list them here. Images and
         // .mp4 / .webm / .ogg videos are supported.
         // Example: media: ["assets/project-01.jpg", "assets/demo.mp4"]
-        media: [],
+        media: ["assets/z-axis.mp4"],
         mediaAlt: "Screenshot of [PROJECT TITLE 01]",
         mediaCaption: "", // optional line under the media
 

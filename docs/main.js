@@ -164,16 +164,15 @@
 
     items.forEach(function (p, index) {
       var article = h('article', 'project');
+      var body = h('div', 'project-body');
+      var copy = h('div', 'project-copy');
 
       var top = h('div', 'project-top');
       top.appendChild(h('span', 'project-index', 'P' + String(index + 1).padStart(2, '0')));
       top.appendChild(h('span', '', p.year || ''));
-      article.appendChild(top);
+      copy.appendChild(top);
 
-      article.appendChild(h('h2', 'project-title', p.title || '[PROJECT TITLE]'));
-
-      var body = h('div', 'project-body');
-      var copy = h('div', 'project-copy');
+      copy.appendChild(h('h2', 'project-title', p.title || '[PROJECT TITLE]'));
 
       var description = p.longDescription || p.description;
       if (description) {
