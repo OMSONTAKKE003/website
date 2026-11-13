@@ -1,5 +1,5 @@
 :root {
-  --bg: #f6f0e6;
+  --bg: #f2e7d3;
   --ink: #26231f;
   --soft: #4a443d;
   --muted: #6b6258;
@@ -23,13 +23,6 @@ body {
   font: 400 13.5px/1.75 var(--mono);
   min-height: 100vh;
   background-color: var(--bg);
-  background-image:
-    linear-gradient(var(--veil), var(--veil)),
-    url("assets/grid-bg.jpg");
-  background-size: cover, cover;
-  background-position: center, center;
-  background-repeat: no-repeat, no-repeat;
-  background-attachment: fixed, fixed;
   -webkit-font-smoothing: antialiased;
   padding: 44px 24px 96px;
 }
